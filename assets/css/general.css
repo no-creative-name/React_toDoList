@@ -1,0 +1,96 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+body {
+
+	font-family: Raleway;
+
+}
+
+.input {
+
+	font-family: Raleway;
+
+	width: 175px;
+	height: 20px;
+	padding: 0px;
+	border-width: 0px;
+	padding-left: 5px;
+	outline: none;
+
+	background-color: lightgrey;
+	opacity: 0.8;
+
+}
+
+button {
+
+	width: 20px;
+	height: 50px;
+	border-width: 0px;
+	background: transparent;
+	outline: none;
+	line-height: 20px;
+
+	font-family: Raleway;
+
+}
+
+.addButton {
+
+	width: 20px;
+	height: 20px;
+	padding: 0;
+	background-color: lightgrey;
+
+}
+
+.item {
+
+	width: 200px;
+	height: 50px;
+
+}
+
+.item:hover {
+
+	background-color: lightgrey;
+
+}
+
+.itemButtons {
+
+	float: right;
+
+}
+
+.toDoText {
+
+	line-height: 50px;
+	padding-left: 5px;
+
+}
+
+.itemChecked {
+
+		background-color: #66ff66;
+
+}
+
+.itemNotChecked {
+
+}
+
+.itemImportant {
+
+	background-color: red;
+
+}
+
+#itemStats {
+
+	padding-left: 5px;
+	font-size: 10pt;
+
+}
