@@ -8,9 +8,10 @@ class App extends React.Component {
 
 	constructor (props) {
 		super(props);
-		let toDos = ['Buy','Sell','Go'];
+		let toDos = [];
 		let toDoCount = toDos.length;
 		this.state= {
+			key: 0,
 			toDos: toDos,
 			toDoCount: toDoCount
 		};
@@ -21,14 +22,10 @@ class App extends React.Component {
 	}
 
 	render () {
-		let toDos = [];
-		for (let i = 0; i < this.state.toDos.length; i++) {
-			toDos.push(<ToDoItem key={i} toDo={this.state.toDos[i]} removeItem={this.removeToDo} ifImportant={this.ifImportant}/>);
-		}
 
 		return (<div>
 					<ToDoInput value={this.state.value} onInput={this.onValueChange}/>
-					{toDos}
+					{this.state.toDos}
 					<ItemStats toDoCount={this.state.toDoCount}/>
 				</div>);
 	}
@@ -39,8 +36,10 @@ class App extends React.Component {
 		}
 
 		else {
-			let newToDos = this.state.toDos;
-			newToDos.push(newValue);
+			let newToDos = this.state.toDos
+			newToDos.push(<ToDoItem key={this.state.key} id={this.state.key} toDo={newValue} removeItem={this.removeToDo} ifImportant={this.ifImportant}/>);
+			let newKey = this.state.key+1;
+			this.setState({key: newKey});
 			this.setState({toDos: newToDos});
 			this.updateToDoCount();
 		}
@@ -48,7 +47,7 @@ class App extends React.Component {
 
 	checkForDuplicates (toDos, newValue) {
 		for (let i = 0; i < toDos.length; i++) {
-			if (toDos[i] == newValue) {
+			if (toDos[i].toDo == newValue) {
 				return true;
 			}
 		}
@@ -56,10 +55,9 @@ class App extends React.Component {
 		return false;
 	}
 
-	removeToDo (toDo) {
+	removeToDo (id) {
 		let newToDos = this.state.toDos;
-		let i = newToDos.indexOf(toDo);
-		newToDos.splice(i, 1);
+		newToDos.splice(id, 1);
 		this.setState({toDos: newToDos});
 		this.updateToDoCount();
 	}
@@ -69,18 +67,21 @@ class App extends React.Component {
 		this.setState({toDoCount: newCount});
 	}
 
-	ifImportant (toDos, toDo, isIt) {
-
-				if (isIt)
-				{
-					let sortedToDos = this.state.toDos;
-					let i = sortedToDos.indexOf(toDo);
-					let removed = sortedToDos.splice(i, 1);
-					sortedToDos.unshift(removed);
-					this.setState({toDos: sortedToDos});
-				}
-
+	ifImportant (id) {
+		let newToDos = this.state.toDos;
+		let arrayId = 0;
+		for(let i = 0; i < newToDos.length; i++) {
+			if (newToDos[i].props.id == id)
+			{
+				arrayId = i;
+			}
 		}
+		if (arrayId != 0) {
+			let toMove = newToDos.splice(arrayId, 1);
+			newToDos = toMove.concat(newToDos);
+			this.setState({toDos: newToDos});
+		}
+	}
 
 }
 

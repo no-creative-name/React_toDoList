@@ -5,7 +5,8 @@ export default class ToDoItem extends React.Component {
 	constructor (props) {
 		super(props);
 		this.state = {
-			task: '',
+			id: this.props.id,
+			task: this.props.toDo,
 			colorClass: 'itemNotChecked',
 			isImportant: false
 		}
@@ -18,7 +19,7 @@ export default class ToDoItem extends React.Component {
 			return (
 				<div className= {"item " + this.state.colorClass}>
 					<span className="toDoText">
-						{this.props.toDo}
+						{this.state.task}
 					</span>
 					<div className="itemButtons">
 						<button onClick={this.onClickCheck}>✓</button>
@@ -39,20 +40,19 @@ export default class ToDoItem extends React.Component {
 	}
 
 	onClickRemove (event) {
-		this.props.removeItem(this.props.toDo);
+		this.props.removeItem(this.state.id);
 	}
 
 	onClickImportant (event) {
 		if(this.state.colorClass == 'itemNotChecked') {
 			this.setState({colorClass: 'itemImportant'});
 			this.setState({isImportant: true});
-			this.props.ifImportant(toDo);
 		}
 		else if (this.state.colorClass == 'itemImportant'){
 			this.setState({colorClass: 'itemNotChecked'});
 			this.setState({isImportant: false});
-			this.props.ifImportant(toDo);
 		}
+		this.props.ifImportant(this.state.id);
 	}
 
 }
